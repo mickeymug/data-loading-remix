@@ -1,21 +1,21 @@
-import { LinksFunction, LoaderFunction, json } from "@remix-run/node";
+import { json } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 import WordComponent, { links as wordLinks } from "~/components/Word";
 import wordPageStyles from "~/styles/currentWord.css";
 
-export const links: LinksFunction = () => {
+export const links = () => {
   return [...wordLinks(), { rel: "stylesheet", href: wordPageStyles }];
 };
 
-export const loader: LoaderFunction = async () => {
+export const loader = async () => {
   const response = await fetch("https://random-words-api.vercel.app/word");
 
-  const responseBody = (await response.json()) as WordAPIResponse;
-  return json<WordAPIObject>(responseBody[0]);
+  const responseBody = await response.json();
+  return json(responseBody[0]);
 };
 
 export default function WordRoute() {
-  const data = useLoaderData() as WordAPIObject;
+  const data = useLoaderData();
 
   return (
     <main className="current-word-wrapper">
@@ -23,11 +23,3 @@ export default function WordRoute() {
     </main>
   );
 }
-
-interface WordAPIObject {
-  word: string;
-  definition: string;
-  pronunciation: string;
-}
-
-type WordAPIResponse = WordAPIObject[];

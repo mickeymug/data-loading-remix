@@ -1,0 +1,10 @@
+.current-word-wrapper {
+  align-items: center;
+  background-color: #191c22;
+  color: #ffffff;
+  display: flex;
+  height: 100vh;
+  justify-content: center;
+  width: 100%;
+  font-family: "DM Sans", sans-serif;
+}
